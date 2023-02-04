@@ -1,22 +1,19 @@
 {
-  "dvd":
-  {
-    "productTitle": "DVD O Poderoso Chefão",
-    "images": "url-to-image-or-empty,another-url-to-image-or-nothing",
-    "qty": "1",
-    "price": "12,99",
-    "condition": "Usado",
-    "movieTrailer": "link-to-youtube-with-movie-trailer",
-    "delivery": "A definir",
-    "takeout": "Permitido",
-    "warranty": "Sem garantia",
-    "format": "DVD",
-    "movieTitle": "O Poderoso Chefão",
-    "movieDirector": "Francis Ford Coppola",
-    "resolution": "SD",
-    "disks": "1",
-    "audio": "Inglês",
-    "gender": "Drama",
-    "company": "Paramount"
-  }
+  "productTitle": "DVD O Poderoso Chefão",
+  "images": "url-to-image-or-empty,another-url-to-image-or-nothing",
+  "qty": "1",
+  "price": "12,99",
+  "condition": "Usado",
+  "movieTrailer": "link-to-youtube-with-movie-trailer",
+  "delivery": "A definir",
+  "takeout": "Permitido",
+  "warranty": "Sem garantia",
+  "format": "DVD",
+  "movieTitle": "O Poderoso Chefão",
+  "movieDirector": "Francis Ford Coppola",
+  "resolution": "SD",
+  "disks": "1",
+  "audio": "Inglês",
+  "gender": "Drama",
+  "company": "Paramount"
 }
