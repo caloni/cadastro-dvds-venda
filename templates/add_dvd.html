@@ -1,0 +1,84 @@
+{% extends 'layout.html' %}
+{% block body %}
+<div class='row'>
+    <div class='col-12 mx-auto'>
+        <h3>Adicionar DVD</h3><hr>
+        <form method='post' action='{{url_for("add_dvd")}}'>
+            <div class='form-group'>
+                <label>Título do produto</label>
+                <input type='text' name='productTitle' value='DVD O Poderoso Chefão' required class='form-control'>
+            </div>
+            <div class='form-group'>
+                <label>Imagens</label>
+                <input type='text' name='images' value='url-to-image-or-empty,another-url-to-image-or-nothing' required class='form-control'>
+            </div>
+            <div class='form-group'>
+                <label>Quantidade</label>
+                <input type='text' name='qty' value='1' required class='form-control'>
+            </div>
+            <div class='form-group'>
+                <label>Preço</label>
+                <input type='text' name='price' value='12,99' required class='form-control'>
+            </div>
+            <div class='form-group'>
+                <label>Condição</label>
+                <input type='text' name='condition' value='Usado' required class='form-control'>
+            </div>
+            <div class='form-group'>
+                <label>Vídeo (trailer, resenha)</label>
+                <input type='text' name='movieTrailer' value='link-to-youtube-with-movie-trailer' required class='form-control'>
+            </div>
+            <div class='form-group'>
+                <label>Entrega</label>
+                <input type='text' name='delivery' value='A definir' required class='form-control'>
+            </div>
+            <div class='form-group'>
+                <label>Retirada</label>
+                <input type='text' name='takeout' value='Permitido' required class='form-control'>
+            </div>
+            <div class='form-group'>
+                <label>Garantia</label>
+                <input type='text' name='warranty' value='Sem garantia' required class='form-control'>
+            </div>
+            <div class='form-group'>
+                <label>Formato do filme</label>
+                <input type='text' name='movieFormat' value='DVD' required class='form-control'>
+            </div>
+            <div class='form-group'>
+                <label>Título do filme</label>
+                <input type='text' name='movieTitle' value='O Poderoso Chefão' required class='form-control'>
+            </div>
+            <div class='form-group'>
+                <label>Diretor do filme</label>
+                <input type='text' name='movieDirector' value='Francis Ford Coppola' required class='form-control'>
+            </div>
+            <div class='form-group'>
+                <label>Resolução</label>
+                <input type='text' name='resolution' value='SD' required class='form-control'>
+            </div>
+            <div class='form-group'>
+                <label>Discos</label>
+                <input type='text' name='disks' value='1' required class='form-control'>
+            </div>
+            <div class='form-group'>
+                <label>Áudio</label>
+                <input type='text' name='audio' value='Inglês' required class='form-control'>
+            </div>
+            <div class='form-group'>
+                <label>Gênero</label>
+                <input type='text' name='gender' value='Drama' required class='form-control'>
+            </div>
+            <div class='form-group'>
+                <label>Distribuidora</label>
+                <input type='text' name='company' value='Paramount' required class='form-control'>
+            </div>
+            <div class='form-group'>
+                <label>Formato</label>
+                <input type='text' name='format' value='Físico' required class='form-control'>
+            </div>
+            <input type='submit' value='Submit' class='btn btn-primary'>
+        </form>
+
+    </div>
+</div>
+{% endblock %}

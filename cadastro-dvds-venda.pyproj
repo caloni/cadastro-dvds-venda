@@ -11,13 +11,15 @@
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <LaunchProvider>Web launcher</LaunchProvider>
-    <WebBrowserUrl>http://localhost</WebBrowserUrl>
+    <WebBrowserUrl>http://localhost:5000/add_dvd</WebBrowserUrl>
     <OutputPath>.</OutputPath>
     <SuppressCollectPythonCloudServiceFiles>true</SuppressCollectPythonCloudServiceFiles>
     <Name>cadastro-dvds-venda-2</Name>
     <RootNamespace>cadastro-dvds-venda-2</RootNamespace>
     <IsWindowsApplication>False</IsWindowsApplication>
     <SuppressEnvironmentCreationPrompt>True</SuppressEnvironmentCreationPrompt>
+    <WebBrowserPort>5000</WebBrowserPort>
+    <Environment>SERVER_HOST=localhost</Environment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -29,10 +31,16 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include=".gitignore" />
+    <Content Include="templates\add_dvd.html">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="Anunciar-02-01-11_03_16.xlsx" />
     <Content Include="dvd.json" />
     <Content Include="dvds.sql" />
     <Content Include="dvds.sqlite3" />
+    <Content Include="templates\layout.html">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="README.md" />
     <Content Include="requirements.txt" />
     <Content Include="Temp.xlsx" />
@@ -40,6 +48,9 @@
   <ItemGroup>
     <Compile Include="dvds.py" />
     <Compile Include="spreadsheet.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="templates\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.Web.targets" />
   <!-- Specify pre- and post-build commands in the BeforeBuild and 
