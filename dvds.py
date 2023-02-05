@@ -5,8 +5,8 @@ import spreadsheet
 import io
 
 version = "alpha"
-endpoint = __name__
-dbFile = __name__ + ".sqlite3"
+endpoint = "dvds"
+dbFile = endpoint + ".sqlite3"
 
 app = Flask(endpoint)
 # Make the WSGI interface available at the top level so wfastcgi can get it.
