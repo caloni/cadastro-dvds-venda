@@ -58,12 +58,12 @@ def register_dvd():
   elif request.method=='POST':
     dvd = request.get_json()
     columns = ['productTitle', 'images', 'qty', 'price', 'condition',
-      'movieTrailer', 'delivery', 'takeout', 'warranty', 'format',
+      'movieTrailer', 'delivery', 'takeout', 'warranty', 'movieFormat',
       'movieTitle', 'movieDirector', 'resolution', 'disks', 'audio',
-      'gender', 'company']
+      'gender', 'company', 'format']
     keys= tuple(dvd[c] for c in columns)
     cur = db.cursor()
-    cur.execute('insert into dvds values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)', keys)
+    cur.execute('insert into dvds values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)', keys)
     db.commit()
     return "dvd " + str(cur.lastrowid) + " criado com sucesso!", 201
 
