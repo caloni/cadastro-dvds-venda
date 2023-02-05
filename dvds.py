@@ -9,6 +9,8 @@ endpoint = __name__
 dbFile = __name__ + ".sqlite3"
 
 app = Flask(endpoint)
+# Make the WSGI interface available at the top level so wfastcgi can get it.
+wsgi_app = app.wsgi_app
 db = sqlite3.connect(dbFile, check_same_thread=False)
 
 def startDb():
@@ -72,4 +74,14 @@ def register_dvd():
     cur.execute('insert into dvds values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)', keys)
     db.commit()
     return "dvd " + str(cur.lastrowid) + " criado com sucesso!", 201
+
+
+if __name__ == '__main__':
+    import os
+    HOST = os.environ.get('SERVER_HOST', 'localhost')
+    try:
+        PORT = int(os.environ.get('SERVER_PORT', '5000'))
+    except ValueError:
+        PORT = 5000
+    app.run(HOST, PORT)
 
