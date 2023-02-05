@@ -1,6 +1,8 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, send_file
 import sqlite3
 import json
+import spreadsheet
+import io
 
 version = "alpha"
 endpoint = __name__
@@ -48,13 +50,17 @@ def hello():
 @app.route("/" + endpoint, methods=['GET', 'POST'])
 def register_dvd():
   if request.method=='GET':
-    ret = ""
+    sp = spreadsheet.Load()
     cur = db.cursor()
     cur.execute('select * from dvds')
     rows = cur.fetchall()
+    line = 0
     for row in rows:
-      ret = ret + "\n\n" + str(row)
-    return ret
+      spreadsheet.Write(sp, row, line)
+      line = line + 1
+    path = spreadsheet.Save(sp)
+    with open(path, 'rb') as bytes:
+      return send_file(io.BytesIO(bytes.read()), attachment_filename='dvds.xlsx', mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
   elif request.method=='POST':
     dvd = request.get_json()
     columns = ['productTitle', 'images', 'qty', 'price', 'condition',
