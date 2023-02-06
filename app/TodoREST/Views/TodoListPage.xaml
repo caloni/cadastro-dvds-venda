@@ -20,12 +20,8 @@
             <DataTemplate>
                 <Grid Padding="20,0,0,0"
                       ColumnDefinitions="0.9*, 0.1*">
-                    <Label Text="{Binding Name}" 
+                    <Label Text="{Binding productTitle}" 
                            VerticalTextAlignment="Center" />
-                    <Image Grid.Column="1"
-                           Source="check.png" 
-                           IsVisible="{Binding Done}"
-                           HorizontalOptions="End" />
                 </Grid>
             </DataTemplate>
         </CollectionView.ItemTemplate>

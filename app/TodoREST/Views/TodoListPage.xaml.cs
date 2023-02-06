@@ -23,7 +23,7 @@ namespace TodoREST.Views
         {
             var navigationParameter = new Dictionary<string, object>
             {
-                { nameof(TodoItem), new TodoItem { ID = Guid.NewGuid().ToString() } }
+                { nameof(DvdItem), new DvdItem { id = Guid.NewGuid().ToString() } }
             };
             await Shell.Current.GoToAsync(nameof(TodoItemPage), navigationParameter);
         }
@@ -32,7 +32,7 @@ namespace TodoREST.Views
         {
             var navigationParameter = new Dictionary<string, object>
             {
-                { nameof(TodoItem), e.CurrentSelection.FirstOrDefault() as TodoItem }
+                { nameof(DvdItem), e.CurrentSelection.FirstOrDefault() as DvdItem }
             };
             await Shell.Current.GoToAsync(nameof(TodoItemPage), navigationParameter);
         }

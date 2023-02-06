@@ -11,7 +11,7 @@ namespace TodoREST.Services
         JsonSerializerOptions _serializerOptions;
         IHttpsClientHandlerService _httpsClientHandlerService;
 
-        public List<TodoItem> Items { get; private set; }
+        public List<DvdItem> Items { get; private set; }
 
         public RestService(IHttpsClientHandlerService service)
         {
@@ -32,9 +32,9 @@ namespace TodoREST.Services
             };
         }
 
-        public async Task<List<TodoItem>> RefreshDataAsync()
+        public async Task<List<DvdItem>> RefreshDataAsync()
         {
-            Items = new List<TodoItem>();
+            Items = new List<DvdItem>();
 
             Uri uri = new Uri(string.Format(Constants.RestUrl, string.Empty));
             try
@@ -43,7 +43,7 @@ namespace TodoREST.Services
                 if (response.IsSuccessStatusCode)
                 {
                     string content = await response.Content.ReadAsStringAsync();
-                    Items = JsonSerializer.Deserialize<List<TodoItem>>(content, _serializerOptions);
+                    Items = JsonSerializer.Deserialize<List<DvdItem>>(content, _serializerOptions);
                 }
             }
             catch (Exception ex)
@@ -54,13 +54,13 @@ namespace TodoREST.Services
             return Items;
         }
 
-        public async Task SaveTodoItemAsync(TodoItem item, bool isNewItem = false)
+        public async Task SaveTodoItemAsync(DvdItem item, bool isNewItem = false)
         {
             Uri uri = new Uri(string.Format(Constants.RestUrl, string.Empty));
 
             try
             {
-                string json = JsonSerializer.Serialize<TodoItem>(item, _serializerOptions);
+                string json = JsonSerializer.Serialize<DvdItem>(item, _serializerOptions);
                 StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
 
                 HttpResponseMessage response = null;

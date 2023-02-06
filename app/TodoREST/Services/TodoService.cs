@@ -11,19 +11,19 @@ namespace TodoREST.Services
             _restService = service;
         }
 
-        public Task<List<TodoItem>> GetTasksAsync()
+        public Task<List<DvdItem>> GetTasksAsync()
         {
             return _restService.RefreshDataAsync();
         }
 
-        public Task SaveTaskAsync(TodoItem item, bool isNewItem = false)
+        public Task SaveTaskAsync(DvdItem item, bool isNewItem = false)
         {
             return _restService.SaveTodoItemAsync(item, isNewItem);
         }
 
-        public Task DeleteTaskAsync(TodoItem item)
+        public Task DeleteTaskAsync(DvdItem item)
         {
-            return _restService.DeleteTodoItemAsync(item.ID);
+            return _restService.DeleteTodoItemAsync(item.id);
         }
     }
 }

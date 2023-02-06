@@ -3,20 +3,20 @@ using TodoREST.Services;
 
 namespace TodoREST.Views
 {
-    [QueryProperty(nameof(TodoItem), "TodoItem")]
+    [QueryProperty(nameof(DvdItem), "DvdItem")]
     public partial class TodoItemPage : ContentPage
     {
         ITodoService _todoService;
-        TodoItem _todoItem;
+        DvdItem _dvdItem;
         bool _isNewItem;
 
-        public TodoItem TodoItem
+        public DvdItem DvdItem
         {
-            get => _todoItem;
+            get => _dvdItem;
             set
             {
                 _isNewItem = IsNewItem(value);
-                _todoItem = value;
+                _dvdItem = value;
                 OnPropertyChanged();
             }
         }
@@ -28,22 +28,22 @@ namespace TodoREST.Views
             BindingContext = this;
         }
 
-        bool IsNewItem(TodoItem todoItem)
+        bool IsNewItem(DvdItem todoItem)
         {
-            if (string.IsNullOrWhiteSpace(todoItem.Name) && string.IsNullOrWhiteSpace(todoItem.Notes))
+            if (string.IsNullOrWhiteSpace(todoItem.productTitle) && string.IsNullOrWhiteSpace(todoItem.movieTitle))
                 return true;
             return false;
         }
 
         async void OnSaveButtonClicked(object sender, EventArgs e)
         {
-            await _todoService.SaveTaskAsync(TodoItem, _isNewItem);
+            await _todoService.SaveTaskAsync(_dvdItem, _isNewItem);
             await Shell.Current.GoToAsync("..");
         }
 
         async void OnDeleteButtonClicked(object sender, EventArgs e)
         {
-            await _todoService.DeleteTaskAsync(TodoItem);
+            await _todoService.DeleteTaskAsync(_dvdItem);
             await Shell.Current.GoToAsync("..");
         }
 

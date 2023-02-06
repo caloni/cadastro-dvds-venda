@@ -4,9 +4,9 @@ namespace TodoREST.Services
 {
     public interface IRestService
     {
-        Task<List<TodoItem>> RefreshDataAsync();
+        Task<List<DvdItem>> RefreshDataAsync();
 
-        Task SaveTodoItemAsync(TodoItem item, bool isNewItem);
+        Task SaveTodoItemAsync(DvdItem item, bool isNewItem);
 
         Task DeleteTodoItemAsync(string id);
     }

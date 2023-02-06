@@ -18,14 +18,9 @@
         </Style>
     </ContentPage.Resources>
 	<VerticalStackLayout Margin="20">
-		<Label Text="Name" />
-		<Entry Text="{Binding Path=TodoItem.Name}" 
+		<Label Text="productTitle" />
+		<Entry Text="{Binding Path=DvdItem.productTitle}" 
                Placeholder="Enter item" />
-		<Label Text="Notes" />
-		<Entry Text="{Binding Path=TodoItem.Notes}"
-               Placeholder="Enter notes" />
-		<Label Text="Done" />
-		<Switch IsToggled="{Binding Path=TodoItem.Done}" />
 		<Button Text="Save" 
                 Clicked="OnSaveButtonClicked" />
 		<Button Text="Delete"

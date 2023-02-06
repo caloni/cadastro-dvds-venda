@@ -4,8 +4,8 @@ namespace TodoREST.Services
 {
     public interface ITodoService
     {
-        Task<List<TodoItem>> GetTasksAsync();
-        Task SaveTaskAsync(TodoItem item, bool isNewItem);
-        Task DeleteTaskAsync(TodoItem item);
+        Task<List<DvdItem>> GetTasksAsync();
+        Task SaveTaskAsync(DvdItem item, bool isNewItem);
+        Task DeleteTaskAsync(DvdItem item);
     }
 }
