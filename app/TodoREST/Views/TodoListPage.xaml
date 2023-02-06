@@ -14,8 +14,7 @@
     </ContentPage.ToolbarItems>
     <CollectionView x:Name="collectionView"
                     Margin="20"
-                    SelectionMode="Single"
-                    SelectionChanged="OnSelectionChanged">
+                    SelectionMode="Single">
         <CollectionView.ItemTemplate>
             <DataTemplate>
                 <Grid Padding="20,0,0,0"
