@@ -5,17 +5,20 @@
         public HttpMessageHandler GetPlatformMessageHandler()
         {
 #if ANDROID
-    #if NET6_0
+#if NET6_0
             var handler = new CustomAndroidMessageHandler();
-    #elif NET7_0_OR_GREATER
+#elif NET7_0_OR_GREATER
             var handler = new Xamarin.Android.Net.AndroidMessageHandler();
-    #endif
+#endif
+            handler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
+            /* enable SSL verification
             handler.ServerCertificateCustomValidationCallback = (message, cert, chain, errors) =>
             {
                 if (cert != null && cert.Issuer.Equals("CN=localhost"))
                     return true;
                 return errors == System.Net.Security.SslPolicyErrors.None;
             };
+            */
             return handler;
 #elif IOS
             var handler = new NSUrlSessionHandler
@@ -24,7 +27,9 @@
             };
             return handler;
 #elif WINDOWS || MACCATALYST
-            return null;
+            HttpClientHandler handler = new HttpClientHandler();
+            handler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
+            return handler;
 #else
             throw new PlatformNotSupportedException("Only Android, iOS, MacCatalyst, and Windows supported.");
 #endif
