@@ -73,11 +73,9 @@
             <Label Text="Formato do produto" />
             <Entry Text="{Binding Path=DvdItem.format}" 
                Placeholder="Este produto está disponível no formato Físico ou Digital?" />
-            <Button Text="Save" 
+            <Button Text="Adicionar" 
                 Clicked="OnSaveButtonClicked" />
-            <Button Text="Delete"
-                Clicked="OnDeleteButtonClicked" />
-            <Button Text="Cancel" 
+            <Button Text="Cancelar" 
                 Clicked="OnCancelButtonClicked" />
         </VerticalStackLayout>
     </ScrollView>
