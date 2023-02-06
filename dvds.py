@@ -84,6 +84,14 @@ def register_dvd():
     return "dvd " + str(cur.lastrowid) + " criado com sucesso!", 201
 
 
+@app.route("/api/dvds/", methods=['GET'])
+def dvds():
+  cur = db.cursor()
+  cur.execute('select * from dvds')
+  rows = cur.fetchall()
+  return json.dumps(rows)
+
+
 @app.route("/add_dvd",methods=['POST','GET'])
 def add_dvd():
     if request.method=='POST':
