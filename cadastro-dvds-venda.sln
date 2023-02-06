@@ -5,6 +5,8 @@ VisualStudioVersion = 17.3.32819.101
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "cadastro-dvds-venda", "cadastro-dvds-venda.pyproj", "{6A07CC31-1435-4B29-BFAF-A5B201C99F8F}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TodoREST", "app\TodoREST\TodoREST.csproj", "{B8CA7EFC-DF0C-4669-9BED-0A38309BD30B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,12 @@ Global
 		{6A07CC31-1435-4B29-BFAF-A5B201C99F8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6A07CC31-1435-4B29-BFAF-A5B201C99F8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6A07CC31-1435-4B29-BFAF-A5B201C99F8F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8CA7EFC-DF0C-4669-9BED-0A38309BD30B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8CA7EFC-DF0C-4669-9BED-0A38309BD30B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8CA7EFC-DF0C-4669-9BED-0A38309BD30B}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{B8CA7EFC-DF0C-4669-9BED-0A38309BD30B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8CA7EFC-DF0C-4669-9BED-0A38309BD30B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8CA7EFC-DF0C-4669-9BED-0A38309BD30B}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
