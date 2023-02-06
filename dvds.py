@@ -4,11 +4,10 @@ import json
 import spreadsheet
 import io
 
-version = "alpha"
-endpoint = "dvds"
-dbFile = endpoint + ".sqlite3"
+version = "0.1.0"
+dbFile = "dvds.sqlite3"
 
-app = Flask(endpoint)
+app = Flask("dvds")
 # Make the WSGI interface available at the top level so wfastcgi can get it.
 wsgi_app = app.wsgi_app
 db = sqlite3.connect(dbFile, check_same_thread=False)
@@ -33,7 +32,7 @@ startDb()
 
 helloHelp = """Hello from dvds app v. {version}!
 
-In order to publish a new DVD access the endpoint /{endpoint}
+In order to publish a new DVD access the endpoint /api/dvds/
 using a POST method and a json object like this:
 
 <pre>
@@ -42,7 +41,7 @@ using a POST method and a json object like this:
 
 Use case:
 <pre>
-curl -H "Content-Type: application/json" -d "@dvd.json" http://this-api-address/dvds
+curl -H "Content-Type: application/json" -d "@dvd.json" http://localhost:5000/api/dvds/
 dvd criado com sucesso!
 </pre>
 """
@@ -53,11 +52,11 @@ def hello():
   jsonSample = ""
   with open('dvd.json', 'r', encoding='utf-8') as f:
     jsonSample = f.read()
-  ret = helloHelp.format(version=version, endpoint=endpoint, jsonSample=jsonSample)
+  ret = helloHelp.format(version=version, jsonSample=jsonSample)
   return ret
 
 
-@app.route("/" + endpoint, methods=['GET', 'POST'])
+@app.route("/dvds", methods=['GET', 'POST'])
 def register_dvd():
   if request.method=='GET':
     sp = spreadsheet.Load()
