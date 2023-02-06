@@ -4,16 +4,23 @@ import json
 import spreadsheet
 import io
 
-version = "alpha"
-endpoint = "dvds"
-dbFile = endpoint + ".sqlite3"
+version = "0.1.0"
+dbFile = "dvds.sqlite3"
 
-app = Flask(endpoint)
+app = Flask("dvds")
 # Make the WSGI interface available at the top level so wfastcgi can get it.
 wsgi_app = app.wsgi_app
 db = sqlite3.connect(dbFile, check_same_thread=False)
 
 def startDb():
+  def row_to_dict(cursor: sqlite3.Cursor, row: sqlite3.Row) -> dict:
+    data = {}
+    for idx, col in enumerate(cursor.description):
+      data[col[0]] = row[idx]
+    return data
+
+  db.row_factory = row_to_dict
+
   sql = None
   with open('dvds.sql', 'r', encoding='utf-8') as f:
     sql = f.read()
@@ -25,7 +32,7 @@ startDb()
 
 helloHelp = """Hello from dvds app v. {version}!
 
-In order to publish a new DVD access the endpoint /{endpoint}
+In order to publish a new DVD access the endpoint /api/dvds/
 using a POST method and a json object like this:
 
 <pre>
@@ -34,7 +41,7 @@ using a POST method and a json object like this:
 
 Use case:
 <pre>
-curl -H "Content-Type: application/json" -d "@dvd.json" http://this-api-address/dvds
+curl -H "Content-Type: application/json" -d "@dvd.json" http://localhost:5000/api/dvds/
 dvd criado com sucesso!
 </pre>
 """
@@ -45,11 +52,11 @@ def hello():
   jsonSample = ""
   with open('dvd.json', 'r', encoding='utf-8') as f:
     jsonSample = f.read()
-  ret = helloHelp.format(version=version, endpoint=endpoint, jsonSample=jsonSample)
+  ret = helloHelp.format(version=version, jsonSample=jsonSample)
   return ret
 
 
-@app.route("/" + endpoint, methods=['GET', 'POST'])
+@app.route("/dvds", methods=['GET', 'POST'])
 def register_dvd():
   if request.method=='GET':
     sp = spreadsheet.Load()
@@ -62,7 +69,27 @@ def register_dvd():
       line = line + 1
     path = spreadsheet.Save(sp)
     with open(path, 'rb') as bytes:
-      return send_file(io.BytesIO(bytes.read()), attachment_filename='dvds.xlsx', mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+      return send_file(io.BytesIO(bytes.read()), download_name='dvds.xlsx', mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+  elif request.method=='POST':
+    dvd = request.get_json()
+    columns = ['productTitle', 'images', 'qty', 'price', 'condition',
+      'movieTrailer', 'delivery', 'takeout', 'warranty', 'movieFormat',
+      'movieTitle', 'movieDirector', 'resolution', 'disks', 'audio',
+      'gender', 'company', 'format']
+    keys= tuple(dvd[c] for c in columns)
+    cur = db.cursor()
+    cur.execute('insert into dvds values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)', keys)
+    db.commit()
+    return "dvd " + str(cur.lastrowid) + " criado com sucesso!", 201
+
+
+@app.route("/api/dvds/", methods=['GET','POST'])
+def dvds():
+  if request.method=='GET':
+    cur = db.cursor()
+    cur.execute('select * from dvds')
+    rows = cur.fetchall()
+    return json.dumps(rows)
   elif request.method=='POST':
     dvd = request.get_json()
     columns = ['productTitle', 'images', 'qty', 'price', 'condition',
