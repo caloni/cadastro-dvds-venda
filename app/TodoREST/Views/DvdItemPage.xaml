@@ -18,7 +18,7 @@
         </Style>
     </ContentPage.Resources>
     <ScrollView VerticalScrollBarVisibility="Default">
-        <VerticalStackLayout Margin="20">
+        <VerticalStackLayout Margin="5">
             <Label Text="Título do produto" />
             <Entry Text="{Binding Path=DvdItem.productTitle}" 
                Placeholder="Entre com o título que será publicado o item" />
