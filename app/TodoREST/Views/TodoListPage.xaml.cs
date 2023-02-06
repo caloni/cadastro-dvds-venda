@@ -25,7 +25,7 @@ namespace TodoREST.Views
             {
                 { nameof(DvdItem), new DvdItem { id = Guid.NewGuid().ToString() } }
             };
-            await Shell.Current.GoToAsync(nameof(TodoItemPage), navigationParameter);
+            await Shell.Current.GoToAsync(nameof(DvdItemPage), navigationParameter);
         }
 
         async void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -34,7 +34,7 @@ namespace TodoREST.Views
             {
                 { nameof(DvdItem), e.CurrentSelection.FirstOrDefault() as DvdItem }
             };
-            await Shell.Current.GoToAsync(nameof(TodoItemPage), navigationParameter);
+            await Shell.Current.GoToAsync(nameof(DvdItemPage), navigationParameter);
         }
     }
 }

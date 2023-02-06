@@ -21,7 +21,7 @@ public static class MauiProgram
 		builder.Services.AddSingleton<ITodoService, TodoService>();
 
 		builder.Services.AddSingleton<TodoListPage>();
-		builder.Services.AddTransient<TodoItemPage>();
+		builder.Services.AddTransient<DvdItemPage>();
 
 		return builder.Build();
 	}

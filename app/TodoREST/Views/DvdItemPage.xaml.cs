@@ -4,7 +4,7 @@ using TodoREST.Services;
 namespace TodoREST.Views
 {
     [QueryProperty(nameof(DvdItem), "DvdItem")]
-    public partial class TodoItemPage : ContentPage
+    public partial class DvdItemPage : ContentPage
     {
         ITodoService _todoService;
         DvdItem _dvdItem;
@@ -21,7 +21,7 @@ namespace TodoREST.Views
             }
         }
 
-        public TodoItemPage(ITodoService service)
+        public DvdItemPage(ITodoService service)
         {
             InitializeComponent();
             _todoService = service;

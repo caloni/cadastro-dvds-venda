@@ -52,7 +52,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="Views\TodoItemPage.xaml">
+	  <Compile Update="Views\DvdItemPage.xaml.cs">
+	    <DependentUpon>DvdItemPage.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="Views\DvdItemPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\TodoListPage.xaml">
