@@ -14,6 +14,14 @@ wsgi_app = app.wsgi_app
 db = sqlite3.connect(dbFile, check_same_thread=False)
 
 def startDb():
+  def row_to_dict(cursor: sqlite3.Cursor, row: sqlite3.Row) -> dict:
+    data = {}
+    for idx, col in enumerate(cursor.description):
+      data[col[0]] = row[idx]
+    return data
+
+  db.row_factory = row_to_dict
+
   sql = None
   with open('dvds.sql', 'r', encoding='utf-8') as f:
     sql = f.read()
