@@ -62,7 +62,7 @@ def register_dvd():
       line = line + 1
     path = spreadsheet.Save(sp)
     with open(path, 'rb') as bytes:
-      return send_file(io.BytesIO(bytes.read()), attachment_filename='dvds.xlsx', mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+      return send_file(io.BytesIO(bytes.read()), download_name='dvds.xlsx', mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
   elif request.method=='POST':
     dvd = request.get_json()
     columns = ['productTitle', 'images', 'qty', 'price', 'condition',
