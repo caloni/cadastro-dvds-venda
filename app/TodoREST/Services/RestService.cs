@@ -12,7 +12,7 @@ namespace TodoREST.Services
         IHttpsClientHandlerService _httpsClientHandlerService;
 
         public List<DvdItem> Items { get; private set; }
-        public List<MovieItem> MovieItems { get; private set; }
+        public List<MovieSearchResult> MovieSearchResults { get; private set; }
 
         public RestService(IHttpsClientHandlerService service)
         {
@@ -95,26 +95,29 @@ namespace TodoREST.Services
             }
         }
 
-        public async Task<List<MovieItem>> SearchMoviesAsync(string search)
+        public async Task<List<MovieSearchResult>> SearchMoviesAsync(MovieSearch search)
         {
-            MovieItems = new List<MovieItem>();
+            MovieSearchResults = new List<MovieSearchResult>();
 
-            Uri uri = new Uri(string.Format(Constants.MoviesRestUrl, search));
+            Uri uri = new Uri(string.Format(Constants.MoviesSearchRestUrl, search));
             try
             {
-                HttpResponseMessage response = await _client.GetAsync(uri);
+                string json = JsonSerializer.Serialize<MovieSearch>(search, _serializerOptions);
+                StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                HttpResponseMessage response = await _client.PostAsync(uri, content);
+                string result = await response.Content.ReadAsStringAsync();
+                MovieSearchResults = JsonSerializer.Deserialize<List<MovieSearchResult>>(result, _serializerOptions);
+
                 if (response.IsSuccessStatusCode)
-                {
-                    string content = await response.Content.ReadAsStringAsync();
-                    MovieItems = JsonSerializer.Deserialize<List<MovieItem>>(content, _serializerOptions);
-                }
+                    Debug.WriteLine(@"\tTodoItem successfully saved.");
             }
             catch (Exception ex)
             {
                 Debug.WriteLine(@"\tERROR {0}", ex.Message);
             }
 
-            return MovieItems;
+            return MovieSearchResults;
         }
 
     }

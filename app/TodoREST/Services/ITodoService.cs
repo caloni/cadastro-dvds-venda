@@ -7,6 +7,6 @@ namespace TodoREST.Services
         Task<List<DvdItem>> GetTasksAsync();
         Task SaveTaskAsync(DvdItem item, bool isNewItem);
         Task DeleteTaskAsync(DvdItem item);
-        Task<List<MovieItem>> SearchMoviesAsync(string search);
+        Task<List<MovieSearchResult>> SearchMoviesAsync(MovieSearch search);
     }
 }

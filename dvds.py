@@ -121,20 +121,28 @@ def add_dvd():
     return render_template("add_dvd.html")
 
 
-@app.route("/api/movies", methods=['GET'])
-def movies():
+@app.route("/api/movies/searches/", methods=['POST'])
+def movies_searches():
   ret = []
-  search = request.args.get('search')
+  search = request.get_json()
   ia = Cinemagoer()
-  movies = ia.search_movie(search)
-  for ms in movies:
-    if ms['kind'] == 'movie':
-      m = ia.get_movie(ms.getID())
-      mi = { 'title': m['title'], 'director': m['director'][0]['name'] ,'year': m['year'] }
-      ret.append(mi)
-    if len(ret) > 4:
-      break
+  results = ia.search_movie(search['query'])
+  for r in results:
+    if r['kind'] == 'movie':
+      res = { 'id': r.getID(), 'title': r['title'], 'longTitle' : r['long imdb title'],
+        'coverUrl': r['cover url'] }
+      ret.append(res);
+      if len(ret) >= 5:
+        break
   return json.dumps(ret)
+
+
+@app.route("/api/movies/<id>", methods=['GET'])
+def movies(id):
+  ia = Cinemagoer()
+  m = ia.get_movie(id)
+  ret = { 'id': m[id], 'title': m['title'], 'year': m['year'], 'director': m['director'][0]['name'] }
+  return json.dumps(ret);
 
 
 if __name__ == '__main__':

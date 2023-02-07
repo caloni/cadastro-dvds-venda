@@ -25,7 +25,7 @@ namespace TodoREST.Services
         {
             return _restService.DeleteTodoItemAsync(item.id);
         }
-        public Task<List<MovieItem>> SearchMoviesAsync(string search)
+        public Task<List<MovieSearchResult>> SearchMoviesAsync(MovieSearch search)
         {
             return _restService.SearchMoviesAsync(search);
         }

@@ -10,6 +10,6 @@ namespace TodoREST.Services
 
         Task DeleteTodoItemAsync(string id);
 
-        Task<List<MovieItem>> SearchMoviesAsync(string search);
+        Task<List<MovieSearchResult>> SearchMoviesAsync(MovieSearch search);
     }
 }

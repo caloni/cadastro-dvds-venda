@@ -56,7 +56,9 @@ namespace TodoREST.Views
         {
             if (searchText.Text != "")
             {
-                searchResults.ItemsSource = await _todoService.SearchMoviesAsync(searchText.Text);
+                var search = new MovieSearch();
+                search.query = searchText.Text;
+                searchResults.ItemsSource = await _todoService.SearchMoviesAsync(search);
             }
         }
 
@@ -70,10 +72,11 @@ namespace TodoREST.Views
 
         private void OnItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            var item = (MovieItem)e.SelectedItem;
+            var item = (MovieSearchResult)e.SelectedItem;
             title.Text = "DVD " + item.title;
             movieTitle.Text = item.title;
-            movieDirector.Text = item.director;
+            //TODO new request to get more movie information
+            //movieDirector.Text = item.director;
             searchResults.ItemsSource = null;
         }
     }
