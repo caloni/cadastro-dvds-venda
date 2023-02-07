@@ -1,4 +1,5 @@
 from flask import Flask, jsonify, render_template, request, send_file,url_for,flash,redirect
+from imdb import Cinemagoer
 import sqlite3
 import json
 import spreadsheet
@@ -118,6 +119,22 @@ def add_dvd():
       flash("dvd " + str(cur.lastrowid) + " criado com sucesso!",'success')
       return redirect(url_for("add_dvd"))
     return render_template("add_dvd.html")
+
+
+@app.route("/api/movies", methods=['GET'])
+def movies():
+  ret = []
+  search = request.args.get('search')
+  ia = Cinemagoer()
+  movies = ia.search_movie(search)
+  for ms in movies:
+    if ms['kind'] == 'movie':
+      m = ia.get_movie(ms.getID())
+      mi = { 'title': m['title'], 'director': m['director'][0]['name'] ,'year': m['year'] }
+      ret.append(mi)
+    if len(ret) > 4:
+      break
+  return json.dumps(ret)
 
 
 if __name__ == '__main__':

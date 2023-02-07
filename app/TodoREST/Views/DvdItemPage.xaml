@@ -19,8 +19,16 @@
     </ContentPage.Resources>
     <ScrollView VerticalScrollBarVisibility="Default">
         <VerticalStackLayout Margin="5">
+            <Label Text="Buscar" />
+            <SearchBar x:Name="searchText"
+                Placeholder="Buscar filme..."
+                SearchButtonPressed="OnSearchButtonClicked"
+                TextChanged="OnSearchTextChanged"/>
+            <ListView x:Name="searchResults"
+                ItemSelected="OnItemSelected"/>
             <Label Text="Título do produto" />
-            <Entry Text="{Binding Path=DvdItem.productTitle}" 
+            <Entry x:Name="title"
+               Text="{Binding Path=DvdItem.productTitle}" 
                Placeholder="Entre com o título que será publicado o item" />
             <Label Text="Imagens do produto" />
             <Entry Text="{Binding Path=DvdItem.images}" 
@@ -50,10 +58,12 @@
             <Entry Text="{Binding Path=DvdItem.movieFormat}" 
                Placeholder="Este é um DVD ou Blu-Ray?" />
             <Label Text="Título do filme" />
-            <Entry Text="{Binding Path=DvdItem.movieTitle}" 
+            <Entry x:Name="movieTitle"
+                Text="{Binding Path=DvdItem.movieTitle}" 
                Placeholder="Qual o título do filme?" />
             <Label Text="Diretor do filme" />
-            <Entry Text="{Binding Path=DvdItem.movieDirector}" 
+            <Entry x:Name="movieDirector"
+                Text="{Binding Path=DvdItem.movieDirector}" 
                Placeholder="Qual o nome do diretor?" />
             <Label Text="Resolução" />
             <Entry Text="{Binding Path=DvdItem.resolution}" 

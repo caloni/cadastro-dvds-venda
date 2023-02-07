@@ -11,5 +11,6 @@
         public static string Scheme = "http"; // or https
         public static string Port = "5000";
         public static string RestUrl = $"{Scheme}://{LocalhostUrl}:{Port}/api/dvds/{{0}}";
+        public static string MoviesRestUrl = $"{Scheme}://{LocalhostUrl}:{Port}/api/movies?search={{0}}";
     }
 }
