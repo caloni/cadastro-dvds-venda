@@ -70,14 +70,21 @@ namespace TodoREST.Views
             }
         }
 
-        private void OnItemSelected(object sender, SelectedItemChangedEventArgs e)
+        async private void OnItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             var item = (MovieSearchResult)e.SelectedItem;
             title.Text = "DVD " + item.title;
-            movieTitle.Text = item.title;
-            //TODO new request to get more movie information
-            //movieDirector.Text = item.director;
             searchResults.ItemsSource = null;
+            movieTitle.Text = item.title;
+            var search = new MovieSearch();
+            search.id = item.id;
+            var result = await _todoService.SearchMoviesAsync(search);
+            var movie = result.FirstOrDefault();
+            if( movie != null )
+            {
+                movieDirector.Text = movie.director;
+                //TODO put the local name of the movie
+            }
         }
     }
 }
