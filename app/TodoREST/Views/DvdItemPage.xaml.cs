@@ -51,5 +51,40 @@ namespace TodoREST.Views
         {
             await Shell.Current.GoToAsync("..");
         }
+
+        async private void OnSearchButtonClicked(object sender, EventArgs e)
+        {
+            if (searchText.Text != "")
+            {
+                var search = new MovieSearch();
+                search.query = searchText.Text;
+                searchResults.ItemsSource = await _todoService.SearchMoviesAsync(search);
+            }
+        }
+
+        private void OnSearchTextChanged(object sender, EventArgs e)
+        {
+            if (searchText.Text == "")
+            {
+                searchResults.ItemsSource = null;
+            }
+        }
+
+        async private void OnItemSelected(object sender, SelectedItemChangedEventArgs e)
+        {
+            var item = (MovieSearchResult)e.SelectedItem;
+            title.Text = "DVD " + item.title;
+            searchResults.ItemsSource = null;
+            movieTitle.Text = item.title;
+            var search = new MovieSearch();
+            search.id = item.id;
+            var result = await _todoService.SearchMoviesAsync(search);
+            var movie = result.FirstOrDefault();
+            if( movie != null )
+            {
+                movieDirector.Text = movie.director;
+                //TODO put the local name of the movie
+            }
+        }
     }
 }

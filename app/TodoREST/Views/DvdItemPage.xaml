@@ -19,60 +19,85 @@
     </ContentPage.Resources>
     <ScrollView VerticalScrollBarVisibility="Default">
         <VerticalStackLayout Margin="5">
+            <Label Text="Buscar" />
+            <SearchBar x:Name="searchText"
+                Placeholder="Buscar filme..."
+                SearchButtonPressed="OnSearchButtonClicked"
+                TextChanged="OnSearchTextChanged"/>
+            <ListView x:Name="searchResults"
+                ItemSelected="OnItemSelected"/>
+
             <Label Text="Título do produto" />
-            <Entry Text="{Binding Path=DvdItem.productTitle}" 
+            <Entry x:Name="title"
+               Text="{Binding Path=DvdItem.productTitle}" 
                Placeholder="Entre com o título que será publicado o item" />
-            <Label Text="Imagens do produto" />
-            <Entry Text="{Binding Path=DvdItem.images}" 
-               Placeholder="Entre com imagens do produto" />
+
             <Label Text="Quantidade" />
             <Entry Text="{Binding Path=DvdItem.qty}" 
                Placeholder="Entre com a quantidade de itens disponíveis" />
-            <Label Text="Preço" />
-            <Entry Text="{Binding Path=DvdItem.price}" 
-               Placeholder="Entre com o preço de venda" />
-            <Label Text="Condição" />
-            <Entry Text="{Binding Path=DvdItem.condition}" 
-               Placeholder="Este é um produto Novo ou Usado?" />
+
+            <Label Text="Imagens do produto" />
+            <Entry Text="{Binding Path=DvdItem.images}" 
+               Placeholder="Entre com URLs de imagens do produto separadas por espaço" />
+
             <Label Text="Vídeo do produto" />
             <Entry Text="{Binding Path=DvdItem.movieTrailer}" 
                Placeholder="Pode ser o trailer do filme ou alguma resenha" />
-            <Label Text="Entrega" />
-            <Entry Text="{Binding Path=DvdItem.delivery}" 
-               Placeholder="Forma de entrega" />
-            <Label Text="Retirada" />
-            <Entry Text="{Binding Path=DvdItem.takeout}" 
-               Placeholder="É permitida a retirada?" />
-            <Label Text="Garantia" />
-            <Entry Text="{Binding Path=DvdItem.warranty}" 
-               Placeholder="Este produto possui qual garantia?" />
-            <Label Text="Formato do filme" />
-            <Entry Text="{Binding Path=DvdItem.movieFormat}" 
-               Placeholder="Este é um DVD ou Blu-Ray?" />
+
+            <Label Text="Preço" />
+            <Entry Text="{Binding Path=DvdItem.price}" 
+               Placeholder="Entre com o preço de venda" />
+
+            <Label Text="Condição" />
+            <Entry Text="{Binding Path=DvdItem.condition}" 
+               Placeholder="Este é um produto Novo ou Usado?" />
+
             <Label Text="Título do filme" />
-            <Entry Text="{Binding Path=DvdItem.movieTitle}" 
+            <Entry x:Name="movieTitle"
+                Text="{Binding Path=DvdItem.movieTitle}" 
                Placeholder="Qual o título do filme?" />
+
             <Label Text="Diretor do filme" />
-            <Entry Text="{Binding Path=DvdItem.movieDirector}" 
+            <Entry x:Name="movieDirector"
+                Text="{Binding Path=DvdItem.movieDirector}" 
                Placeholder="Qual o nome do diretor?" />
-            <Label Text="Resolução" />
-            <Entry Text="{Binding Path=DvdItem.resolution}" 
-               Placeholder="O filme está em SD ou HD?" />
-            <Label Text="Discos" />
-            <Entry Text="{Binding Path=DvdItem.disks}" 
-               Placeholder="Em quantos discos físicos está o produto?" />
+
             <Label Text="Áudio" />
             <Entry Text="{Binding Path=DvdItem.audio}" 
                Placeholder="Qual o idioma principal que está o filme?" />
+
             <Label Text="Gênero" />
             <Entry Text="{Binding Path=DvdItem.gender}" 
-               Placeholder="Este é um Drama, Comédia, Terror, Ação ou Aventura?" />
-            <Label Text="Distribuidora" />
+               Placeholder="Este é um Drama, Comédia, Musical?" />
+
+            <Label Text="Formato do filme" />
+            <Entry Text="{Binding Path=DvdItem.movieFormat}" 
+               Placeholder="Este é um DVD ou Blu-ray?" />
+
+            <Label Text="Quantidade de discos" />
+            <Entry Text="{Binding Path=DvdItem.disks}" 
+               Placeholder="Em quantos discos físicos está o produto?" />
+
+            <Label Text="Resolução de vídeo" />
+            <Entry Text="{Binding Path=DvdItem.resolution}" 
+               Placeholder="O filme está em HD ou SD?" />
+
+            <Label Text="Tipo de Garantia" />
+            <Entry Text="{Binding Path=DvdItem.warranty}" 
+               Placeholder="Garantia do vendedor, Garantia de fábrica ou Sem garantia?" />
+
+            <Label Text="Forma de envio" />
+            <Entry Text="{Binding Path=DvdItem.delivery}" 
+               Placeholder="Você oferece frete grátis ou o frete é Por conta do comprador?" />
+
+            <Label Text="Retirar pessoalmente" />
+            <Entry Text="{Binding Path=DvdItem.takeout}" 
+               Placeholder="É permitida a retirada? Coloque Concordo ou Não aceito." />
+
+            <Label Text="Companhia produtora" />
             <Entry Text="{Binding Path=DvdItem.company}" 
                Placeholder="Exs: Paramount, Warner" />
-            <Label Text="Formato do produto" />
-            <Entry Text="{Binding Path=DvdItem.format}" 
-               Placeholder="Este produto está disponível no formato Físico ou Digital?" />
+
             <Button Text="Adicionar" 
                 Clicked="OnSaveButtonClicked" />
             <Button Text="Cancelar" 

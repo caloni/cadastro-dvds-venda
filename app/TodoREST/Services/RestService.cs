@@ -12,6 +12,7 @@ namespace TodoREST.Services
         IHttpsClientHandlerService _httpsClientHandlerService;
 
         public List<DvdItem> Items { get; private set; }
+        public List<MovieSearchResult> MovieSearchResults { get; private set; }
 
         public RestService(IHttpsClientHandlerService service)
         {
@@ -93,5 +94,31 @@ namespace TodoREST.Services
                 Debug.WriteLine(@"\tERROR {0}", ex.Message);
             }
         }
+
+        public async Task<List<MovieSearchResult>> SearchMoviesAsync(MovieSearch search)
+        {
+            MovieSearchResults = new List<MovieSearchResult>();
+
+            Uri uri = new Uri(string.Format(Constants.MoviesSearchRestUrl, search));
+            try
+            {
+                string json = JsonSerializer.Serialize<MovieSearch>(search, _serializerOptions);
+                StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                HttpResponseMessage response = await _client.PostAsync(uri, content);
+                string result = await response.Content.ReadAsStringAsync();
+                MovieSearchResults = JsonSerializer.Deserialize<List<MovieSearchResult>>(result, _serializerOptions);
+
+                if (response.IsSuccessStatusCode)
+                    Debug.WriteLine(@"\tTodoItem successfully saved.");
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(@"\tERROR {0}", ex.Message);
+            }
+
+            return MovieSearchResults;
+        }
+
     }
 }

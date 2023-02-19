@@ -1,4 +1,6 @@
+from cmath import e
 from flask import Flask, jsonify, render_template, request, send_file,url_for,flash,redirect
+from imdb import Cinemagoer
 import sqlite3
 import json
 import spreadsheet
@@ -118,6 +120,35 @@ def add_dvd():
       flash("dvd " + str(cur.lastrowid) + " criado com sucesso!",'success')
       return redirect(url_for("add_dvd"))
     return render_template("add_dvd.html")
+
+
+@app.route("/api/movies/searches/", methods=['POST'])
+def movies_searches():
+  ret = []
+  search = request.get_json()
+  ia = Cinemagoer()
+  if 'id' in search and search['id']:
+    m = ia.get_movie(search['id'])
+    ret = [{ 'id': search['id'], 'title': m['title'], 'year': m['year'], 'director': m['director'][0]['name'] }]
+    return json.dumps(ret);
+  elif 'query' in search and search['query']:
+    results = ia.search_movie(search['query'])
+    for r in results:
+      if r['kind'] == 'movie':
+        res = { 'id': r.getID(), 'title': r['title'], 'longTitle' : r['long imdb title'],
+          'coverUrl': r['cover url'] }
+        ret.append(res);
+        if len(ret) >= 5:
+          break
+    return json.dumps(ret)
+
+
+@app.route("/api/movies/<id>", methods=['GET'])
+def movies(id):
+  ia = Cinemagoer()
+  m = ia.get_movie(id)
+  ret = { 'id': m[id], 'title': m['title'], 'year': m['year'], 'director': m['director'][0]['name'] }
+  return json.dumps(ret);
 
 
 if __name__ == '__main__':
