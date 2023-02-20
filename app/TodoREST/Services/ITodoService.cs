@@ -8,5 +8,6 @@ namespace TodoREST.Services
         Task SaveTaskAsync(DvdItem item, bool isNewItem);
         Task DeleteTaskAsync(DvdItem item);
         Task<List<MovieSearchResult>> SearchMoviesAsync(MovieSearch search);
+        Task<Models.ImageUploadResult> SaveImageToCloud(Stream image);
     }
 }

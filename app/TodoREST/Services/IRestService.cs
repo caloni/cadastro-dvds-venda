@@ -11,5 +11,7 @@ namespace TodoREST.Services
         Task DeleteTodoItemAsync(string id);
 
         Task<List<MovieSearchResult>> SearchMoviesAsync(MovieSearch search);
+
+        Task<Models.ImageUploadResult> SaveImageToCloud(Stream image);
     }
 }

@@ -29,5 +29,9 @@ namespace TodoREST.Services
         {
             return _restService.SearchMoviesAsync(search);
         }
+        public Task<Models.ImageUploadResult> SaveImageToCloud(Stream image)
+        {
+            return _restService.SaveImageToCloud(image);
+        }
     }
 }

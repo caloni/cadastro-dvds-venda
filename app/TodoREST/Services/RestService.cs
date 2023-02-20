@@ -120,5 +120,34 @@ namespace TodoREST.Services
             return MovieSearchResults;
         }
 
+        public async Task<Models.ImageUploadResult> SaveImageToCloud(Stream image)
+        {
+            string ApiKey = "b47f9a509c20814658c50b05128849dd";
+            Uri uri = new Uri(string.Format(Constants.ImageUploadRestUrl, ApiKey));
+
+            try
+            {
+                HttpContent fileStreamContent = new StreamContent(image);
+                var formData = new MultipartFormDataContent();
+                formData.Add(fileStreamContent, "image", "dvd.jpg");
+
+                HttpResponseMessage response = await _client.PostAsync(uri, formData);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    Debug.WriteLine(@"\tImage successfully saved.");
+                    string sresult = await response.Content.ReadAsStringAsync();
+                    Models.ImageUploadResult result = JsonSerializer.Deserialize<Models.ImageUploadResult>(sresult, _serializerOptions);
+                    return result;
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(@"\tERROR {0}", ex.Message);
+            }
+
+            return null;
+        }
+
     }
 }
