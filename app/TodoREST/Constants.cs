@@ -12,5 +12,6 @@
         public static string Port = "5000";
         public static string RestUrl = $"{Scheme}://{LocalhostUrl}:{Port}/api/dvds/{{0}}";
         public static string MoviesSearchRestUrl = $"{Scheme}://{LocalhostUrl}:{Port}/api/movies/searches/";
+        public static string ImageUploadRestUrl = $"https://api.imgbb.com/1/upload?expiration=600&key={{0}}";
     }
 }

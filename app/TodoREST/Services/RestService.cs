@@ -1,7 +1,8 @@
 ﻿using System.Diagnostics;
+using System.Net;
 using System.Text;
 using System.Text.Json;
-using TodoREST.Models;
+using TodoREST;
 
 namespace TodoREST.Services
 {
@@ -11,8 +12,8 @@ namespace TodoREST.Services
         JsonSerializerOptions _serializerOptions;
         IHttpsClientHandlerService _httpsClientHandlerService;
 
-        public List<DvdItem> Items { get; private set; }
-        public List<MovieSearchResult> MovieSearchResults { get; private set; }
+        public List<Models.DvdItem> Items { get; private set; }
+        public List<Models.MovieSearchResult> MovieSearchResults { get; private set; }
 
         public RestService(IHttpsClientHandlerService service)
         {
@@ -33,9 +34,9 @@ namespace TodoREST.Services
             };
         }
 
-        public async Task<List<DvdItem>> RefreshDataAsync()
+        public async Task<List<Models.DvdItem>> RefreshDataAsync()
         {
-            Items = new List<DvdItem>();
+            Items = new List<Models.DvdItem>();
 
             Uri uri = new Uri(string.Format(Constants.RestUrl, string.Empty));
             try
@@ -44,7 +45,7 @@ namespace TodoREST.Services
                 if (response.IsSuccessStatusCode)
                 {
                     string content = await response.Content.ReadAsStringAsync();
-                    Items = JsonSerializer.Deserialize<List<DvdItem>>(content, _serializerOptions);
+                    Items = JsonSerializer.Deserialize<List<Models.DvdItem>>(content, _serializerOptions);
                 }
             }
             catch (Exception ex)
@@ -55,13 +56,13 @@ namespace TodoREST.Services
             return Items;
         }
 
-        public async Task SaveTodoItemAsync(DvdItem item, bool isNewItem = false)
+        public async Task SaveTodoItemAsync(Models.DvdItem item, bool isNewItem = false)
         {
             Uri uri = new Uri(string.Format(Constants.RestUrl, string.Empty));
 
             try
             {
-                string json = JsonSerializer.Serialize<DvdItem>(item, _serializerOptions);
+                string json = JsonSerializer.Serialize<Models.DvdItem>(item, _serializerOptions);
                 StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
 
                 HttpResponseMessage response = null;
@@ -95,19 +96,19 @@ namespace TodoREST.Services
             }
         }
 
-        public async Task<List<MovieSearchResult>> SearchMoviesAsync(MovieSearch search)
+        public async Task<List<Models.MovieSearchResult>> SearchMoviesAsync(Models.MovieSearch search)
         {
-            MovieSearchResults = new List<MovieSearchResult>();
+            MovieSearchResults = new List<Models.MovieSearchResult>();
 
             Uri uri = new Uri(string.Format(Constants.MoviesSearchRestUrl, search));
             try
             {
-                string json = JsonSerializer.Serialize<MovieSearch>(search, _serializerOptions);
+                string json = JsonSerializer.Serialize<Models.MovieSearch>(search, _serializerOptions);
                 StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
 
                 HttpResponseMessage response = await _client.PostAsync(uri, content);
                 string result = await response.Content.ReadAsStringAsync();
-                MovieSearchResults = JsonSerializer.Deserialize<List<MovieSearchResult>>(result, _serializerOptions);
+                MovieSearchResults = JsonSerializer.Deserialize<List<Models.MovieSearchResult>>(result, _serializerOptions);
 
                 if (response.IsSuccessStatusCode)
                     Debug.WriteLine(@"\tTodoItem successfully saved.");
@@ -118,6 +119,35 @@ namespace TodoREST.Services
             }
 
             return MovieSearchResults;
+        }
+
+        public async Task<Models.ImageUploadResult> SaveImageToCloud(Stream image)
+        {
+            string ApiKey = "b47f9a509c20814658c50b05128849dd";
+            Uri uri = new Uri(string.Format(Constants.ImageUploadRestUrl, ApiKey));
+
+            try
+            {
+                HttpContent fileStreamContent = new StreamContent(image);
+                var formData = new MultipartFormDataContent();
+                formData.Add(fileStreamContent, "image", "dvd.jpg");
+
+                HttpResponseMessage response = await _client.PostAsync(uri, formData);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    Debug.WriteLine(@"\tImage successfully saved.");
+                    string sresult = await response.Content.ReadAsStringAsync();
+                    Models.ImageUploadResult result = JsonSerializer.Deserialize<Models.ImageUploadResult>(sresult, _serializerOptions);
+                    return result;
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(@"\tERROR {0}", ex.Message);
+            }
+
+            return null;
         }
 
     }

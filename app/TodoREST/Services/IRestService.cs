@@ -1,15 +1,17 @@
-﻿using TodoREST.Models;
+﻿using TodoREST;
 
 namespace TodoREST.Services
 {
     public interface IRestService
     {
-        Task<List<DvdItem>> RefreshDataAsync();
+        Task<List<Models.DvdItem>> RefreshDataAsync();
 
-        Task SaveTodoItemAsync(DvdItem item, bool isNewItem);
+        Task SaveTodoItemAsync(Models.DvdItem item, bool isNewItem);
 
         Task DeleteTodoItemAsync(string id);
 
-        Task<List<MovieSearchResult>> SearchMoviesAsync(MovieSearch search);
+        Task<List<Models.MovieSearchResult>> SearchMoviesAsync(Models.MovieSearch search);
+
+        Task<Models.ImageUploadResult> SaveImageToCloud(Stream image);
     }
 }
