@@ -38,6 +38,10 @@
 
   <Capabilities>
     <rescap:Capability Name="runFullTrust" />
+    <uap:Capability Name="videosLibrary"/>
+    <uap:Capability Name="picturesLibrary"/>
+    <uap6:Capability Name="graphicsCapture"/>
+    <DeviceCapability Name="webcam"/>
   </Capabilities>
 
 </Package>
