@@ -123,7 +123,7 @@ namespace TodoREST.Services
 
         public async Task<Models.ImageUploadResult> SaveImageToCloud(Stream image)
         {
-            string ApiKey = "b47f9a509c20814658c50b05128849dd";
+            string ApiKey = "PUT_AN_API_KEY_HERE";
             Uri uri = new Uri(string.Format(Constants.ImageUploadRestUrl, ApiKey));
 
             try
