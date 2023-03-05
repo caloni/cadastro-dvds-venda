@@ -86,11 +86,33 @@ namespace TodoREST.Views
                 //TODO put the local name of the movie
             }
         }
+
         async void OnAddPhotoClicked(object sender, EventArgs e)
         {
             if (MediaPicker.Default.IsCaptureSupported)
             {
                 FileResult photo = await MediaPicker.Default.PickPhotoAsync();
+
+                if (photo != null)
+                {
+                    using Stream sourceStream = await photo.OpenReadAsync();
+                    var result = await _todoService.SaveImageToCloud(sourceStream);
+                    if( result != null )
+                    {
+                        string txt = dvdImages.Text != null ? dvdImages.Text : "";
+                        string sep = txt.Length > 0 ? " " : "";
+                        txt += sep + result.Data.Url;
+                        dvdImages.Text = txt;
+                    }
+                }
+            }
+        }
+
+        async void OnTakePhotoClicked(object sender, EventArgs e)
+        {
+            if (MediaPicker.Default.IsCaptureSupported)
+            {
+                FileResult photo = await MediaPicker.Default.CapturePhotoAsync();
 
                 if (photo != null)
                 {
