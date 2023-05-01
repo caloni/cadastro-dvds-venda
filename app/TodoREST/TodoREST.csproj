@@ -53,6 +53,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
+	  <PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.4" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <Compile Update="Views\DvdItemPage.xaml.cs">
 	    <DependentUpon>DvdItemPage.xaml</DependentUpon>
 	  </Compile>

@@ -1,4 +1,5 @@
-﻿using TodoREST.Models;
+﻿using TodoREST.Data;
+using TodoREST.Models;
 using TodoREST.Services;
 
 namespace TodoREST.Views
@@ -6,7 +7,7 @@ namespace TodoREST.Views
     [QueryProperty(nameof(DvdItem), "DvdItem")]
     public partial class DvdItemPage : ContentPage
     {
-        ITodoService _todoService;
+        DvdItemDatabase _db;
         DvdItem _dvdItem;
         bool _isNewItem;
 
@@ -21,10 +22,10 @@ namespace TodoREST.Views
             }
         }
 
-        public DvdItemPage(ITodoService service)
+        public DvdItemPage(DvdItemDatabase db)
         {
             InitializeComponent();
-            _todoService = service;
+            _db = db;
             BindingContext = this;
         }
 
@@ -37,13 +38,13 @@ namespace TodoREST.Views
 
         async void OnSaveButtonClicked(object sender, EventArgs e)
         {
-            await _todoService.SaveTaskAsync(_dvdItem, _isNewItem);
+            int result = _db.SaveItem(_dvdItem);
             await Shell.Current.GoToAsync("..");
         }
 
         async void OnDeleteButtonClicked(object sender, EventArgs e)
         {
-            await _todoService.DeleteTaskAsync(_dvdItem);
+            int result = _db.DeleteItem(_dvdItem);
             await Shell.Current.GoToAsync("..");
         }
 
@@ -52,13 +53,13 @@ namespace TodoREST.Views
             await Shell.Current.GoToAsync("..");
         }
 
-        async private void OnSearchButtonClicked(object sender, EventArgs e)
+        private void OnSearchButtonClicked(object sender, EventArgs e)
         {
             if (searchText.Text != "")
             {
                 var search = new MovieSearch();
                 search.query = searchText.Text;
-                searchResults.ItemsSource = await _todoService.SearchMoviesAsync(search);
+                //searchResults.ItemsSource = await _todoService.SearchMoviesAsync(search);
             }
         }
 
@@ -70,7 +71,7 @@ namespace TodoREST.Views
             }
         }
 
-        async private void OnItemSelected(object sender, SelectedItemChangedEventArgs e)
+        private void OnItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             var item = (MovieSearchResult)e.SelectedItem;
             title.Text = "DVD " + item.title;
@@ -78,13 +79,13 @@ namespace TodoREST.Views
             movieTitle.Text = item.title;
             var search = new MovieSearch();
             search.id = item.id;
-            var result = await _todoService.SearchMoviesAsync(search);
-            var movie = result.FirstOrDefault();
-            if( movie != null )
-            {
-                movieDirector.Text = movie.director;
+            //var result = await _todoService.SearchMoviesAsync(search);
+            //var movie = result.FirstOrDefault();
+            //if( movie != null )
+            //{
+                //movieDirector.Text = movie.director;
                 //TODO put the local name of the movie
-            }
+            //}
         }
 
         async void OnAddPhotoClicked(object sender, EventArgs e)
@@ -96,7 +97,7 @@ namespace TodoREST.Views
                 if (photo != null)
                 {
                     using Stream sourceStream = await photo.OpenReadAsync();
-                    var result = await _todoService.SaveImageToCloud(sourceStream);
+                    /*var result = await _todoService.SaveImageToCloud(sourceStream);
                     if( result != null )
                     {
                         string txt = dvdImages.Text != null ? dvdImages.Text : "";
@@ -104,6 +105,7 @@ namespace TodoREST.Views
                         txt += sep + result.Data.Url;
                         dvdImages.Text = txt;
                     }
+                    */
                 }
             }
         }
@@ -117,6 +119,7 @@ namespace TodoREST.Views
                 if (photo != null)
                 {
                     using Stream sourceStream = await photo.OpenReadAsync();
+                    /*
                     var result = await _todoService.SaveImageToCloud(sourceStream);
                     if( result != null )
                     {
@@ -125,6 +128,7 @@ namespace TodoREST.Views
                         txt += sep + result.Data.Url;
                         dvdImages.Text = txt;
                     }
+                    */
                 }
             }
         }
