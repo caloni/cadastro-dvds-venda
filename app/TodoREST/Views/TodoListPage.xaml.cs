@@ -1,22 +1,23 @@
-﻿using TodoREST.Models;
+﻿using TodoREST.Data;
+using TodoREST.Models;
 using TodoREST.Services;
 
 namespace TodoREST.Views
 {
     public partial class TodoListPage : ContentPage
     {
-        ITodoService _todoService;
+        DvdItemDatabase _db;
 
-        public TodoListPage(ITodoService service)
+        public TodoListPage(DvdItemDatabase db)
         {
             InitializeComponent();
-            _todoService = service;
+            _db = db;
         }
 
-        protected async override void OnAppearing()
+        protected override void OnAppearing()
         {
             base.OnAppearing();
-            collectionView.ItemsSource = await _todoService.GetTasksAsync();
+            collectionView.ItemsSource = _db.GetItems();
         }
 
         async void OnAddItemClicked(object sender, EventArgs e)

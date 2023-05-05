@@ -1,7 +1,10 @@
-﻿namespace TodoREST.Models
+﻿using SQLite;
+
+namespace TodoREST.Models
 {
     public class DvdItem
     {
+        [PrimaryKey]
         public string id { get; set; }
         public string productTitle { get; set; }
         public string images { get; set; }

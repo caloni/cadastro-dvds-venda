@@ -1,4 +1,5 @@
-﻿using TodoREST.Services;
+﻿using TodoREST.Data;
+using TodoREST.Services;
 using TodoREST.Views;
 
 namespace TodoREST;
@@ -23,6 +24,8 @@ public static class MauiProgram
 		builder.Services.AddSingleton<TodoListPage>();
 		builder.Services.AddTransient<DvdItemPage>();
 
-		return builder.Build();
+        builder.Services.AddSingleton<DvdItemDatabase>();
+
+        return builder.Build();
 	}
 }
