@@ -22,6 +22,20 @@ flask run
 
 Prints the help to how to register a DVD.
 
-## /dvds
+## /api/dvds
 
-Allows you to register a new DVD using POST method.
+### GET
+
+List all DVDs registered. Eg:
+
+```
+curl http://localhost:5000/api/dvds/
+```
+
+### POST
+
+Register a new DVD. Eg:
+
+```
+curl -H "Content-Type: application/json" -d "@dvd.json" http://localhost:5000/api/dvds/
+```
